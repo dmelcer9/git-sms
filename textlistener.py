@@ -1,4 +1,4 @@
-from Flask import Flask, request
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -8,5 +8,7 @@ def incoming_sms():
     
     print(body)
 
-if __name__ == "__main__"
-    app.run(debug=True)
+    return ("", 204)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)
