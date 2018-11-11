@@ -24,14 +24,21 @@ def process_commits_between(old, new):
     for file in parseddiff:
         for hunk in file:
             for line in hunk.target_lines():
-                if line.is_added and line.value.strip() != "" :
+
+                text = line.value.strip()
+
+                if line.is_added and text != "" :
                     phoneNum = os.path.splitext(os.path.basename(file.target_file))[0]
-                    print("Send message %s to %s" % (line.value.strip(), phoneNum))
+                    print("Send message %s to %s" % (text, phoneNum))
+
+                    is_attachment = text.startswith("Attachment: ")
+                    attachment_url = text.replace("Attachment: ", "")
 
                     client.messages.create(
                             to= "+" + phoneNum,
                             from_= "+" + os.environ["FROM_PHONE_NUM"],
-                            body= line.value.strip())
+                            body= test if not is_attachment else None,
+                            media_url= attachment_url if is_attachment else None)
                 
                 
 
