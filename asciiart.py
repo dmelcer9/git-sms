@@ -7,9 +7,6 @@ FINAL_WIDTH = 100
 # From light to dark
 ASCII_CHARS = [" ", ".", "'",",", "\"", "*", "^", ":", ";", "+","?", "%", "$","&","@", "#"]
 
-# From dark to light
-ASCII_CHARS.reverse()
-
 def ascii_from_url(url):
    return ascii_from_image(Image.open(BytesIO(requests.get(url).content))) 
 
@@ -19,8 +16,6 @@ def ascii_from_image(image):
    scaled = image.resize((int(scaling_factor * image.width),
        int(scaling_factor * image.height * 1/2)), # Compensate for difference in char width/height
        Image.BICUBIC)
-   print(image.size)
-   print(scaled.size)
 
    greyscaled = scaled.convert('L')
 

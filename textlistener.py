@@ -2,6 +2,7 @@ from flask import Flask, request
 from git import Repo
 import os
 import shutil
+from asciiart import ascii_from_url
 
 sourcepath = os.environ["GIT_REPO_PATH"]
 
@@ -31,7 +32,9 @@ def incoming_sms():
 
     numMedia = int(request.values.get('NumMedia', None))
     for media in range(numMedia):
-        bodylines.append(">>Attachment: " + request.values.get('MediaUrl' + str(media), None))
+        mediaurl = request.values.get('MediaUrl' + str(media), None)
+        bodylines.append(">>Attachment: " + mediaurl)
+        bodylines.extend([">>" + line for line in ascii_from_url(mediaurl).split("\n")])
 
     with open("/tmp/smsrepo/" + phonenum, "a") as file:
         file.write("\n" + "\n".join(bodylines) + "\n")
