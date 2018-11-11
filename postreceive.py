@@ -11,6 +11,12 @@ client = Client()
 
 def process_commits_between(old, new):
     repo = Repo(os.environ["GIT_REPO_PATH"])
+    
+    thiscommit = repo.commit(new)
+
+    if thiscommit.message.startswith("Incoming message"):
+        return
+
     rawdiff = repo.git.diff(old, new)
 
     parseddiff = PatchSet(rawdiff)
