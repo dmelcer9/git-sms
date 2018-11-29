@@ -37,7 +37,7 @@ def process_commits_between(old, new):
                     client.messages.create(
                             to= "+" + phoneNum,
                             from_= "+" + os.environ["FROM_PHONE_NUM"],
-                            body= test if not is_attachment else None,
+                            body= text if not is_attachment else None,
                             media_url= attachment_url if is_attachment else None)
                 
                 
